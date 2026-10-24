@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đổi mã khôi phục</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="/">♥ Hồ sơ cá nhân</a>
+    <a href="{{ url_for('admin') }}">← Về quản trị</a>
+</header>
+<main class="panel" style="max-width:480px">
+    <div class="eyebrow">Security settings</div>
+    <h1>Đổi mã khôi phục</h1>
+    <p>Mã này được dùng khi bạn quên mật khẩu đăng nhập.</p>
+
+    {% for message in get_flashed_messages() %}
+        <div class="notice">{{ message }}</div>
+    {% endfor %}
+
+    <form method="post">
+        <label>Mã khôi phục hiện tại</label>
+        <input type="password" name="current_key" required autocomplete="current-password">
+
+        <label>Mã khôi phục mới (ít nhất 8 ký tự)</label>
+        <input type="password" name="new_key" required minlength="8" autocomplete="new-password">
+
+        <label>Xác nhận mã khôi phục mới</label>
+        <input type="password" name="confirm_key" required minlength="8" autocomplete="new-password">
+
+        <button class="btn" type="submit" style="width:100%;margin-top:22px">
+            Lưu mã khôi phục mới
+        </button>
+    </form>
+</main>
+</body>
+</html>

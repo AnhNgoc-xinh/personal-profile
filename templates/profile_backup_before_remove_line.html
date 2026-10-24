@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ profile.name }} | Hồ sơ cá nhân</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="/">♥ {{ profile.name }}</a>
+    <nav class="nav">
+        <a href="#home">⌂ Trang chủ</a>
+        <a href="#about">✦ Giới thiệu</a>
+        <a href="#skills">✧ Kỹ năng</a>
+        <a href="#hobbies">♡ Sở thích</a>
+        <a href="#contact">♡ Liên hệ</a>
+    </nav>
+    <a class="btn btn-light" href="{{ url_for('login') }}">♙ Đăng nhập</a>
+</header>
+
+<main class="container">
+    <section class="hero" id="home">
+        <div>
+            {% if profile.avatar %}
+                <img class="avatar" src="{{ url_for('static', filename=profile.avatar) }}" alt="Ảnh đại diện">
+            {% else %}
+                <div class="avatar">{{ profile.name[:1] or 'N' }}</div>
+            {% endif %}
+        </div>
+        <div>
+            <div class="eyebrow">Welcome to my little world</div>
+            <h1>{{ profile.name }}</h1>
+            <p><strong>{{ profile.major or 'Sinh viên Công nghệ thông tin' }}</strong></p>
+            {% if profile.school %}<p>✦ {{ profile.school }}</p>{% endif %}
+            <p class="quote">{{ profile.intro or 'Mỗi ngày học thêm một điều mới, mỗi ngày tiến gần hơn tới ước mơ.' }}</p>
+
+        </div>
+    </section>
+
+    <div class="cards">
+        <section class="card" id="about">
+            <h2 class="section-title">♙ Thông tin cá nhân</h2>
+            <div class="info-row"><span class="info-label">Ngày sinh</span><span class="info-value">{{ profile.birthday or 'Chưa cập nhật' }}</span></div>
+            <div class="info-row"><span class="info-label">Trường học</span><span class="info-value">{{ profile.school or 'Chưa cập nhật' }}</span></div>
+            <div class="info-row"><span class="info-label">Ngành học</span><span class="info-value">{{ profile.major or 'Chưa cập nhật' }}</span></div>
+            <div class="info-row"><span class="info-label">Email</span><span class="info-value">{{ profile.email or 'Chưa cập nhật' }}</span></div>
+            <div class="info-row"><span class="info-label">Địa chỉ</span><span class="info-value">{{ profile.address or 'Chưa cập nhật' }}</span></div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">☼ Lịch sinh hoạt</h2>
+            {% for item in (profile.routine or '').splitlines() %}
+                {% if item.strip() %}<div class="routine-item">{{ item }}</div>{% endif %}
+            {% else %}
+                <p>Chưa cập nhật lịch sinh hoạt.</p>
+            {% endfor %}
+        </section>
+
+        <section class="card" id="skills">
+            <h2 class="section-title">✦ Kỹ năng</h2>
+            <div class="chips">
+                {% for skill in (profile.skills or '').replace(',', '\n').splitlines() %}
+                    {% if skill.strip() %}<span class="chip">{{ skill.strip() }}</span>{% endif %}
+                {% else %}
+                    <span class="chip">Chưa cập nhật kỹ năng</span>
+                {% endfor %}
+            </div>
+        </section>
+
+                <section class="card" id="hobbies">
+            <h2 class="section-title">♡ Sở thích</h2>
+            <div class="chips">
+                {% for hobby in (profile.hobbies or '').replace(',', '\n').splitlines() %}
+                    {% if hobby.strip() %}
+                        <span class="chip">♡ {{ hobby.strip() }}</span>
+                    {% endif %}
+                {% else %}
+                    <span class="chip">Chưa cập nhật sở thích</span>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="card" id="contact">
+            <h2 class="section-title">♡ Liên hệ với tôi</h2>
+            <div class="socials">
+                {% if profile.facebook %}<a href="{{ profile.facebook }}" target="_blank" rel="noopener noreferrer">Facebook ↗</a>{% endif %}
+                {% if profile.instagram %}<a href="{{ profile.instagram }}" target="_blank" rel="noopener noreferrer">Instagram ↗</a>{% endif %}
+                {% if profile.github %}<a href="{{ profile.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>{% endif %}
+                {% if profile.email %}<a href="mailto:{{ profile.email }}">Email ✉</a>{% endif %}
+            </div>
+            <p>Email: {{ profile.email or 'Chưa cập nhật' }}</p>
+            <p>Facebook, Instagram và GitHub có thể mở qua các liên kết ở phần giới thiệu.</p>
+        </section>
+    </div>
+</main>
+
+<footer class="footer">Made with ♥ · {{ profile.name }}</footer>
+</body>
+</html>

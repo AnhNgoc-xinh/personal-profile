@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập quản trị</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="panel small-panel">
+    <h1>Đăng nhập quản trị</h1>
+    {% for message in get_flashed_messages() %}
+        <p class="notice">{{ message }}</p>
+    {% endfor %}
+    <form method="post">
+        <label>Tên đăng nhập</label>
+        <input name="username" required autocomplete="username">
+        <label>Mật khẩu</label>
+        <input name="password" type="password" required autocomplete="current-password">
+        <button type="submit">Đăng nhập</button>
+    </form>
+    <p><a href="{{ url_for('index') }}">Quay lại trang cá nhân</a></p>
+</main>
+</body>
+</html>

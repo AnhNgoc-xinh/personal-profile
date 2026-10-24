@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập quản trị</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="/">♥ Hồ sơ cá nhân</a>
+    <a href="/">← Về trang chủ</a>
+</header>
+<main class="panel" style="max-width:440px;margin-top:65px">
+    <div style="text-align:center;font-size:38px;color:var(--purple)">♙</div>
+    <h1 style="text-align:center">Chào mừng bạn trở lại!</h1>
+    <p style="text-align:center;color:var(--muted)">Đăng nhập để quản lý hồ sơ cá nhân.</p>
+
+    {% for message in get_flashed_messages() %}
+        <div class="notice">{{ message }}</div>
+    {% endfor %}
+
+    <form method="post">
+        <label>Tên tài khoản</label>
+        <input name="username" required autocomplete="username" placeholder="Nhập tên tài khoản">
+        <label>Mật khẩu</label>
+        <input name="password" type="password" required autocomplete="current-password" placeholder="Nhập mật khẩu">
+        <button class="btn" type="submit" style="width:100%">Đăng nhập →</button>
+    </form>
+    <p style="text-align:center;margin-top:18px">
+        <a href="{{ url_for('forgot_password') }}">Quên mật khẩu?</a>
+    </p>
+</main>
+</body>
+</html>

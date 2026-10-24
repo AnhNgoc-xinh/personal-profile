@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chỉnh sửa hồ sơ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="panel">
+    <h1>Chỉnh sửa hồ sơ cá nhân</h1>
+    {% for message in get_flashed_messages() %}
+        <p class="notice">{{ message }}</p>
+    {% endfor %}
+
+    <form method="post" enctype="multipart/form-data">
+        <label>Họ và tên</label>
+        <input name="name" value="{{ profile.name }}">
+
+        <label>Ngày sinh</label>
+        <input name="birthday" value="{{ profile.birthday }}">
+
+        <label>Trường học</label>
+        <input name="school" value="{{ profile.school }}">
+
+        <label>Ngành học</label>
+        <input name="major" value="{{ profile.major }}">
+
+        <label>Giới thiệu bản thân</label>
+        <textarea name="intro" rows="4">{{ profile.intro }}</textarea>
+
+        <label>Email</label>
+        <input name="email" type="email" value="{{ profile.email }}">
+
+        <label>Địa chỉ</label>
+        <input name="address" value="{{ profile.address }}">
+
+        <label>Sở thích</label>
+        <textarea name="hobbies" rows="3">{{ profile.hobbies }}</textarea>
+
+        <label>Ảnh đại diện</label>
+        <input name="avatar_file" type="file" accept=".png,.jpg,.jpeg,.gif,.webp">
+        {% if profile.avatar %}
+            <p>Ảnh hiện tại:</p>
+            <img class="avatar-preview" src="{{ url_for('static', filename=profile.avatar) }}" alt="Ảnh đại diện">
+        {% endif %}
+
+        <label>Facebook (đường dẫn)</label>
+        <input name="facebook" value="{{ profile.facebook }}">
+
+        <label>Instagram (đường dẫn)</label>
+        <input name="instagram" value="{{ profile.instagram }}">
+
+        <label>GitHub (đường dẫn)</label>
+        <input name="github" value="{{ profile.github }}">
+
+        <label>Lịch sinh hoạt (mỗi dòng một hoạt động)</label>
+        <textarea name="routine" rows="5">{{ profile.routine }}</textarea>
+
+        <button type="submit">Lưu thay đổi</button>
+    </form>
+    <p><a href="{{ url_for('index') }}">Xem trang cá nhân</a></p>
+    <p><a href="{{ url_for('logout') }}">Đăng xuất</a></p>
+<p><a href="{{ url_for('change_password') }}">Đổi mật khẩu</a></p>
+</main>
+</body>
+</html>

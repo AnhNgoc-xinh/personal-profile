@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản trị hồ sơ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="/">♥ {{ profile.name }}</a>
+    <nav class="nav">
+        <a href="/">Xem trang công khai ↗</a>
+        <a href="{{ url_for('change_password') }}">Đổi mật khẩu</a>
+        <a href="{{ url_for('logout') }}">Đăng xuất</a>
+    </nav>
+</header>
+
+<main class="panel">
+    <div class="admin-heading">
+        <div>
+            <div class="eyebrow">Personal workspace</div>
+            <h1>Quản trị hồ sơ</h1>
+            <p style="color:var(--muted)">Chào bạn! Những thay đổi tại đây sẽ hiển thị trên trang cá nhân công khai.</p>
+        </div>
+        <a class="btn btn-light" href="{{ url_for('change_password') }}">♙ Đổi mật khẩu</a>
+    </div>
+
+    {% for message in get_flashed_messages() %}
+        <div class="notice">{{ message }}</div>
+    {% endfor %}
+
+    <form method="post" enctype="multipart/form-data">
+        <h2 class="section-title">✦ Thông tin hồ sơ</h2>
+        <div class="form-grid">
+            <div class="full">
+                <label>Ảnh đại diện</label>
+                {% if profile.avatar %}
+                    <img class="preview" src="{{ url_for('static', filename=profile.avatar) }}" alt="Ảnh hiện tại">
+                {% else %}
+                    <p style="color:var(--muted)">Bạn chưa tải ảnh đại diện.</p>
+                {% endif %}
+                <input type="file" name="avatar_file" accept=".png,.jpg,.jpeg,.gif,.webp">
+            </div>
+
+            <div>
+                <label>Họ và tên</label>
+                <input name="name" value="{{ profile.name }}" required>
+            </div>
+            <div>
+                <label>Ngày sinh</label>
+                <input name="birthday" value="{{ profile.birthday }}" placeholder="Ví dụ: 01/01/2005">
+            </div>
+            <div>
+                <label>Trường học</label>
+                <input name="school" value="{{ profile.school }}">
+            </div>
+            <div>
+                <label>Ngành học</label>
+                <input name="major" value="{{ profile.major }}">
+            </div>
+            <div>
+                <label>Email</label>
+                <input name="email" type="email" value="{{ profile.email }}">
+            </div>
+            <div>
+                <label>Địa chỉ</label>
+                <input name="address" value="{{ profile.address }}">
+            </div>
+            <div class="full">
+                <label>Sở thích</label>
+                <input name="hobbies" value="{{ profile.hobbies }}" placeholder="Đọc sách, nghe nhạc, du lịch...">
+            </div>
+            <div class="full">
+                <label>Giới thiệu bản thân</label>
+                <textarea name="intro" rows="4">{{ profile.intro }}</textarea>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:30px">♡ Mạng xã hội</h2>
+        <div class="form-grid">
+            <div>
+                <label>Facebook</label>
+                <input name="facebook" type="url" value="{{ profile.facebook }}" placeholder="https://facebook.com/...">
+            </div>
+            <div>
+                <label>Instagram</label>
+                <input name="instagram" type="url" value="{{ profile.instagram }}" placeholder="https://instagram.com/...">
+            </div>
+            <div class="full">
+                <label>GitHub</label>
+                <input name="github" type="url" value="{{ profile.github }}" placeholder="https://github.com/...">
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top:30px">✦ Kỹ năng và dự án</h2>
+        <label>Kỹ năng (phân cách bằng dấu phẩy)</label>
+        <textarea name="skills" rows="2" placeholder="HTML, CSS, JavaScript, Python">{{ profile.skills }}</textarea>
+        <label>Dự án nổi bật</label>
+        <textarea name="projects" rows="3">{{ profile.projects }}</textarea>
+
+        <h2 class="section-title" style="margin-top:30px">☼ Lịch sinh hoạt</h2>
+        <label>Mỗi dòng là một hoạt động</label>
+        <textarea name="routine" rows="5" placeholder="Sáng: Học tập&#10;Chiều: Làm bài tập&#10;Tối: Ôn bài">{{ profile.routine }}</textarea>
+
+        <button class="btn" type="submit" style="width:100%;margin-top:25px">▣ Lưu thay đổi</button>
+    </form>
+</main>
+<footer class="footer">Khu vực quản trị riêng tư · <a href="{{ url_for('logout') }}">Đăng xuất</a></footer>
+</body>
+</html>
